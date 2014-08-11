@@ -1,0 +1,25 @@
+{
+  "name": "cal",
+  "version": "0.1.0",
+  "description": "Better version of cal",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/main"
+  },
+  "repository": {
+    "type": "git@github.com:charliedowler/cal.git",
+    "url": "https://github.com/charliedowler/cal"
+  },
+  "keywords": [
+    "calendar"
+  ],
+  "author": "charliedowler",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "~2.8.1",
+    "minimist": "~0.2.0"
+  },
+  "devDependencies": {
+    "tap": "~0.4.12"
+  }
+}
