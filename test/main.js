@@ -1,5 +1,6 @@
 var test = require('tap').test;
 var Cal = require('../index');
+var exec = require('child_process').exec;
 
 var cal = new Cal();
 cal.setYear(2014);
@@ -8,11 +9,14 @@ cal.setMonth(7);
 test('cal', function(runner) {
   runner.equal(Object.prototype.toString.call(cal.now()), '[object Date]', 'cal.now() returns Date object');
   runner.equal(cal.getDaysThisMonth(), 31, 'cal.getDaysThisMonth() returns 31');
-  runner.equal(cal.getDaysOfWeek()[0], 'Friday', 'cal.getDaysOfWeek()[0] returns Friday');
+  runner.equal(cal.daysOfWeek[0], 'Sunday', 'cal.getDaysOfWeek()[0] returns Monday');
+  runner.equal(cal.getDaysOfWeekByMonth()[0], 'Friday', 'cal.getDaysOfWeek()[0] returns Friday');
   runner.equal(cal.getYear(), 2014, 'cal.getYear() returns 2014');
   runner.equal(cal.getMonth(), 'August', 'cal.getMonth() returns August');
   cal.setMonth(8);
   runner.equal(cal.getMonth(), 'September', 'cal.setMonth(8) sets month to September');
-
-  runner.end();
+  exec('node ./cli', function(err, stdout, stderr) {
+    runner.equal(stdout, "   September 2014\nSu Mo Tu We Th Fr Sa\n 1  2  3  4  5  6\n 7  8  9 10 11 12 13\n14 15 16 17 18 19 20\n21 22 23 24 25 26 27\n28 29 30\n");
+    runner.end();
+  });
 });

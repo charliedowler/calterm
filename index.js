@@ -1,4 +1,5 @@
 var moment = require('moment');
+var table = require('text-table');
 
 var Cal = function() {
   this.moment = moment();
@@ -23,7 +24,9 @@ Cal.prototype.getMonth = function() {
   return this.moment.format('MMMM');
 };
 
-Cal.prototype.getDaysOfWeek = function() {
+Cal.prototype.daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+Cal.prototype.getDaysOfWeekByMonth = function() {
   var days = [];
 
   for (var i = 0; i < this.getDaysThisMonth(); i++) {
