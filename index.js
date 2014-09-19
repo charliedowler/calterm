@@ -11,7 +11,7 @@ Cal.prototype.now = function() {
 };
 
 Cal.prototype.setMonth = function(month) {
-  this.moment.set('month', month);
+  this.moment.set('month', month - 1);
 };
 Cal.prototype.setYear = function(year) {
   this.moment.set('year', year);
@@ -35,7 +35,7 @@ Cal.prototype.getDaysOfWeekByMonth = function() {
   return days;
 };
 Cal.prototype.getFirstDayOfMonth = function() {
-  return this.getDaysOfWeek()[0];
+  return this.getDaysOfWeekByMonth()[0];
 };
 
 Cal.prototype.getDaysThisMonth = function() {
