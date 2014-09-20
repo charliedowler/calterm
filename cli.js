@@ -10,8 +10,8 @@ var days = cal.daysOfWeek.map(function(day) {
 });
 var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
 
-var title = table([[' ', cal.getMonth() + ' ' + cal.getYear(), ' ']], { align: [ 'c' ] });
-var s = function() {
+var header = table([[' ', cal.getMonth() + ' ' + cal.getYear(), ' ']], { align: [ 'c' ] });
+var c = function() {
   var startDay = 0;
   var arr = [];
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
@@ -30,11 +30,11 @@ var s = function() {
   });
   return _.toArray(lists);
 }();
-var newArr = [days];
-for (var i in s) {
-  newArr.push(s[i]);
+var calendar = [days];
+for (var i in c) {
+  calendar.push(c[i]);
 }
-var d = table(newArr, { align: [ 'c' ] });
+calendar = table(calendar, { align: [ 'c' ] });
 
-console.log(title);
-console.log(d);
+console.log(header);
+console.log(calendar)
