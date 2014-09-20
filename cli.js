@@ -1,9 +1,12 @@
+var argv = require('minimist')(process.argv.slice(2));
 var Cal = require('./');
 var table = require('text-table');
 var _ = require('underscore');
 var cal = new Cal();
 
-cal.setMonth(9);
+if (argv.m && typeof argv.m == 'number') {
+  cal.setMonth(argv.m);
+}
 
 var days = cal.daysOfWeek.map(function(day) {
   return day.substring(0, 2);
