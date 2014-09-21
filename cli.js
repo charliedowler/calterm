@@ -7,6 +7,9 @@ var cal = new Cal();
 if (argv.m && typeof argv.m == 'number') {
   cal.setMonth(argv.m);
 }
+else if (argv.y && typeof argv.y == 'number') {
+  cal.setYear(argv.y);
+}
 
 var days = cal.daysOfWeek.map(function(day) {
   return day.substring(0, 2);
@@ -37,7 +40,7 @@ var calendar = [days];
 for (var i in c) {
   calendar.push(c[i]);
 }
-calendar = table(calendar, { align: [ 'c' ] });
+calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] });
 
 console.log(header);
 console.log(calendar)
