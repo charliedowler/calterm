@@ -16,7 +16,7 @@ test('cal', function (runner) {
   runner.equal(cal.getMonth(), 'August', 'cal.getMonth() returns August');
   cal.setMonth(9);
   runner.equal(cal.getMonth(), 'September', 'cal.setMonth(9) sets month to September');
-  exec('node ./cli', function (err, stdout, stderr) {
+  exec('node ./cli -i', function (err, stdout, stderr) {
     stdout = stdout.replace('September 2014\n', '');
     stdout = stdout.trim();
     runner.equal(stdout, table([
