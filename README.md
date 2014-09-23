@@ -1,16 +1,16 @@
-## Cal [![Build Status][travis-image]][travis-url]
+## Calterm [![Build Status][travis-image]][travis-url]
 
 > Print a calender in your terminal
 
 ## Getting Started
 ```shell
-$ npm install -g cal
+$ npm install -g calterm
 ```
 
 ### Usage
 
 ```js
-$ cal
+$ calterm
    September 2014
 Su Mo Tu We Th Fr Sa
     1  2  3  4  5  6
@@ -34,7 +34,7 @@ Type: `Number`
 Set the year
 
 ## Release History
-- 2014-09-22 v0.1.0 Initial release
+- 2014-09-23 v0.1.0 Initial release
 
-[travis-url]: http://travis-ci.org/charliedowler/cal
-[travis-image]: https://secure.travis-ci.org/charliedowler/cal.png?branch=master
+[travis-url]: http://travis-ci.org/charliedowler/calterm
+[travis-image]: https://secure.travis-ci.org/charliedowler/calterm.png?branch=master
