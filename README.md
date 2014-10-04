@@ -10,7 +10,7 @@ $ npm install -g calterm
 ### Usage
 
 ```js
-$ calterm
+$ calterm 9 2014
    September 2014
 Su Mo Tu We Th Fr Sa
     1  2  3  4  5  6
@@ -22,6 +22,8 @@ Su Mo Tu We Th Fr Sa
 ```
 
 ### Options
+
+You can pass the month as year as as arguments or use flags to define them.
 
 #### options.m
 Type: `Number`

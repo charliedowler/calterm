@@ -7,35 +7,46 @@ var cal = new Calterm();
 var fs = require('fs');
 var colors = require('colors');
 
+argv._.forEach(function (arg) {
+  if (/^[0-9]{1,2}$/.test(arg)) {
+    argv.m = arg;
+  }
+  else if (/[0-9]{4}/.test(arg)) {
+    argv.y = arg;
+  }
+});
+
 if (argv.m && typeof argv.m == 'number') {
   cal.setMonth(argv.m);
 }
-else if (argv.y && typeof argv.y == 'number') {
+if (argv.y && typeof argv.y == 'number') {
   cal.setYear(argv.y);
 }
 
-var days = cal.daysOfWeek.map(function(day) {
+var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
 });
 var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
 
-var header = table([[ ' ', cal.getMonth() + ' ' + cal.getYear(), ' ']], { align: [ 'c', 'c', 'c'] });
-var c = function() {
+var header = table([
+  [ ' ', cal.getMonth() + ' ' + cal.getYear(), ' ']
+], { align: [ 'c', 'c', 'c'] });
+var c = function () {
   var startDay = 0;
   var arr = [];
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
     arr.push(day);
   }
-  _.filter(days, function(day, index) {
+  _.filter(days, function (day, index) {
     if (day == firstDay) {
       startDay = index;
     }
   });
-  for(var i =0;i<startDay;i++) {
+  for (var i = 0; i < startDay; i++) {
     arr.unshift(' ');
   }
-  var lists = _.groupBy(arr, function(element, index){
-    return Math.floor(index/7);
+  var lists = _.groupBy(arr, function (element, index) {
+    return Math.floor(index / 7);
   });
   return _.toArray(lists);
 }();
