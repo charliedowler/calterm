@@ -16,6 +16,8 @@ test('cal', function (runner) {
   runner.equal(cal.getMonth(), 'August', 'cal.getMonth() returns August');
   cal.setMonth(9);
   runner.equal(cal.getMonth(), 'September', 'cal.setMonth(9) sets month to September');
+  cal.setYear(2022);
+  runner.equal(cal.getYear(), 2022, 'cal.setYear(2022) sets the year to 2022');
   exec('node ./cli 9', function (err, stdout, stderr) {
     stdout = stdout.replace('September 2014\n', '');
     stdout = stdout.trim();
