@@ -26,34 +26,39 @@ if (argv.y && typeof argv.y == 'number') {
 var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
 });
-var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
 
 var header = table([
   [ ' ', cal.getMonth() + ' ' + cal.getYear(), ' ']
 ], { align: [ 'c', 'c', 'c'] });
+
 var c = function () {
+  var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
   var startDay = 0;
   var arr = [];
+
+  // Fill in the days
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
     arr.push(day);
   }
-  _.filter(days, function (day, index) {
+
+  // Find the first day of the month
+  days.forEach(function(day, i) {
     if (day == firstDay) {
-      startDay = index;
+      startDay = i;
     }
   });
+
+  // Prepend blank spaces to calendar until the first day of the month
   for (var i = 0; i < startDay; i++) {
     arr.unshift(' ');
   }
-  var lists = _.groupBy(arr, function (element, index) {
+
+  // Group days by week
+  return _.chain(arr).groupBy(function (element, index) {
     return Math.floor(index / 7);
-  });
-  return _.toArray(lists);
+  }).toArray().value();
 }();
-var calendar = [days];
-for (var i in c) {
-  calendar.push(c[i]);
-}
+var calendar = [days].concat(c);
 calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] });
 
 console.log(header);
