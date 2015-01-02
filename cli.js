@@ -26,10 +26,14 @@ if (argv.y && typeof argv.y == 'number') {
 var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
 });
-
-var header = table([
-  [ ' ', cal.getMonth() + ' ' + cal.getYear(), ' ']
-], { align: [ 'c', 'c', 'c'] });
+var blank = [];
+var header = cal.getMonth() + ' ' + cal.getYear();
+for (var i = 0; i < (Math.floor((20 - header.length) / 2));i++) {
+  blank.push(' ');
+}
+header = table([
+  blank.concat([header])
+], {hsep: '' });
 
 var c = function () {
   var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
@@ -59,7 +63,7 @@ var c = function () {
   }).toArray().value();
 }();
 var calendar = [days].concat(c);
-calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] });
 
+calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] });
 console.log(header);
 console.log(calendar);
