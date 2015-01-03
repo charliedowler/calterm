@@ -36,6 +36,8 @@ Type: `Number`
 Set the year
 
 ## Release History
+- 2015-01-03 v0.2.1 Fixed off center header
+- 2014-11-17 v0.2.0 Smarter arguments
 - 2014-09-23 v0.1.0 Initial release
 
 [travis-url]: http://travis-ci.org/charliedowler/calterm
