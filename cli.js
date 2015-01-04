@@ -42,7 +42,11 @@ var c = function () {
 
   // Fill in the days
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
-    arr.push(day);
+    /**
+     * Here we can scan a list of dates and highlight them in the calender
+     * arr.push((day + '').green)
+     */
+    arr.push((day + ''));
   }
 
   // Find the first day of the month
@@ -64,6 +68,20 @@ var c = function () {
 }();
 var calendar = [days].concat(c);
 
-calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] });
-console.log(header);
+calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'], stringLength: function(str) {
+  /**
+   * Colors adds encoding to the string which screws up the table,
+   * here we are checking if the day number should have 1 or 2 chars
+   */
+  var res = str.length;
+
+  if (str.length == 11) {
+    res = 1;
+  }
+  else if (str.length == 12) {
+    res = 2;
+  }
+  return res;
+}});
+console.log(header.cyan);
 console.log(calendar);
