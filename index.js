@@ -1,5 +1,4 @@
 var moment = require('moment');
-var table = require('text-table');
 
 var Cal = function() {
   this.moment = moment();

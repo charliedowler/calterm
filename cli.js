@@ -40,13 +40,23 @@ var c = function () {
   var startDay = 0;
   var arr = [];
 
+  var tmp = new Calterm();
+  var title = tmp.getMonth() + ' ' + tmp.getYear();
+  var today = tmp.moment.format('D');
+
   // Fill in the days
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
-    /**
-     * Here we can scan a list of dates and highlight them in the calender
-     * arr.push((day + '').green)
-     */
-    arr.push((day + ''));
+    var item = day < 10 ? ' ' + day : day;
+    if (RegExp(title).test(header) && day == today) {
+      arr.push(item.inverse);
+    }
+    else {
+      /**
+       * Here we can scan a list of dates and highlight them in the calender
+       * arr.push(item.green)
+       */
+      arr.push(item);
+    }
   }
 
   // Find the first day of the month
@@ -69,16 +79,12 @@ var c = function () {
 var calendar = [days].concat(c);
 
 calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'], stringLength: function(str) {
+  var res = str.length;
   /**
    * Colors adds encoding to the string which screws up the table,
-   * here we are checking if the day number should have 1 or 2 chars
+   * here we are checking if the day has encoding
    */
-  var res = str.length;
-
-  if (str.length == 11) {
-    res = 1;
-  }
-  else if (str.length == 12) {
+  if (res == 11 || res == 12) {
     res = 2;
   }
   return res;

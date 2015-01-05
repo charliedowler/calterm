@@ -19,7 +19,7 @@ test('cal', function (runner) {
   cal.setYear(2022);
   runner.equal(cal.getYear(), 2022, 'cal.setYear(2022) sets the year to 2022');
   exec('node ./cli 9 2014', function (err, stdout, stderr) {
-    stdout = stdout.replace('September 2014\n', '');
+    stdout = stdout.replace('\u001b[36m   September 2014\u001b[39m\n', '');
     stdout = stdout.trim();
     runner.equal(stdout, table([
       [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
