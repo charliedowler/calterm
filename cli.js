@@ -36,7 +36,13 @@ header = table([
 ], {hsep: '' });
 
 var c = function () {
-  var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
+  try {
+    var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
+  }
+  catch (e) {
+    console.error('Oops, that date is out of our range. Try again.'.red);
+    process.exit(1)
+  }
   var startDay = 0;
   var arr = [];
 
@@ -46,7 +52,7 @@ var c = function () {
 
   // Fill in the days
   for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
-    var item = day < 10 ? ' ' + day : day;
+    var item = day < 10 ? ' ' + day : day + '';
     if (RegExp(title).test(header) && day == today) {
       arr.push(item.inverse);
     }
