@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-var argv = require('minimist')(process.argv.slice(2));
-var Calterm = require('./');
-var table = require('text-table');
-var _ = require('underscore');
-var cal = new Calterm();
+require('colors');
 var fs = require('fs');
-var colors = require('colors');
+var Calterm = require('./');
+var _ = require('underscore');
+var table = require('text-table');
+var argv = require('minimist')(process.argv.slice(2));
+
+var cal = new Calterm();
 
 argv._.forEach(function (arg) {
   if (/^[0-9]{1,2}$/.test(arg)) {
@@ -35,54 +36,53 @@ header = table([
   blank.concat([header])
 ], {hsep: '' });
 
-var c = function () {
-  try {
-    var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
+try {
+  var firstDay = cal.getFirstDayOfMonth().substring(0, 2);
+}
+catch (e) {
+  console.error('Oops, that date is out of our range. Try again.'.red);
+  process.exit(1);
+}
+
+var grid = [];
+var startDay = 0;
+var present = new Calterm();
+var today = present.moment.format('D');
+var title = present.getMonth() + ' ' + present.getYear();
+
+// Fill in the days
+for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
+  var item = day < 10 ? ' ' + day : day + '';
+  if (RegExp(title).test(header) && day == today) {
+    grid.push(item.inverse);
   }
-  catch (e) {
-    console.error('Oops, that date is out of our range. Try again.'.red);
-    process.exit(1)
+  else {
+    /**
+     * Here we can scan a list of dates and highlight them in the calender
+     * arr.push(item.green)
+     */
+    grid.push(item);
   }
-  var startDay = 0;
-  var arr = [];
+}
 
-  var tmp = new Calterm();
-  var title = tmp.getMonth() + ' ' + tmp.getYear();
-  var today = tmp.moment.format('D');
-
-  // Fill in the days
-  for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
-    var item = day < 10 ? ' ' + day : day + '';
-    if (RegExp(title).test(header) && day == today) {
-      arr.push(item.inverse);
-    }
-    else {
-      /**
-       * Here we can scan a list of dates and highlight them in the calender
-       * arr.push(item.green)
-       */
-      arr.push(item);
-    }
+// Find the first day of the month
+days.forEach(function(day, i) {
+  if (day == firstDay) {
+    startDay = i;
   }
+});
 
-  // Find the first day of the month
-  days.forEach(function(day, i) {
-    if (day == firstDay) {
-      startDay = i;
-    }
-  });
+// Prepend blank spaces to calendar until the first day of the month
+for (var i = 0; i < startDay; i++) {
+  grid.unshift(' ');
+}
 
-  // Prepend blank spaces to calendar until the first day of the month
-  for (var i = 0; i < startDay; i++) {
-    arr.unshift(' ');
-  }
+// Group days by week
+var weeks = _.chain(grid).groupBy(function (element, index) {
+  return Math.floor(index / 7);
+}).toArray().value();
 
-  // Group days by week
-  return _.chain(arr).groupBy(function (element, index) {
-    return Math.floor(index / 7);
-  }).toArray().value();
-}();
-var calendar = [days].concat(c);
+var calendar = [days].concat(weeks);
 
 calendar = table(calendar, { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'], stringLength: function(str) {
   var res = str.length;
