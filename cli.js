@@ -3,8 +3,10 @@ require('colors');
 var fs = require('fs');
 var Calterm = require('./');
 var _ = require('underscore');
+var moment = require('moment');
 var table = require('text-table');
 var argv = require('minimist')(process.argv.slice(2));
+var bankHolidays = require('./data/uk-holidays.json');
 
 var cal = new Calterm();
 
@@ -23,6 +25,25 @@ if (argv.m && typeof argv.m == 'number') {
 if (argv.y && typeof argv.y == 'number') {
   cal.setYear(argv.y);
 }
+
+var events = [];
+
+for (var place in bankHolidays) {
+  events = events.concat(bankHolidays[place].events);
+}
+var unique = [];
+events = events.filter(function(event) {
+  var eventDate = moment(event.date);
+  return eventDate.year() === cal.getYear() && cal.getMonth() === eventDate.format('MMMM');
+}).filter(function(event) {
+  if ((event.title ==  _.findWhere(unique,  event.title))) {
+    return false;
+  }
+  else {
+    unique.push(event.title);
+    return true;
+  }
+});
 
 var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
@@ -57,11 +78,15 @@ for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
     grid.push(item.inverse);
   }
   else {
-    /**
-     * Here we can scan a list of dates and highlight them in the calender
-     * arr.push(item.green)
-     */
-    grid.push(item);
+    var hol = _.find(events, function(event) {
+      return moment(event.date).format('DD') == day;
+    });
+    if (!!hol) {
+      grid.push(item.green);
+    }
+    else {
+      grid.push(item);
+    }
   }
 }
 
