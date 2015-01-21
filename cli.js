@@ -28,22 +28,24 @@ if (argv.y && typeof argv.y == 'number') {
 
 var events = [];
 
-for (var place in bankHolidays) {
-  events = events.concat(bankHolidays[place].events);
+if (!process.env.CALTERM_DISABLE_EVENTS) {
+  for (var place in bankHolidays) {
+    events = events.concat(bankHolidays[place].events);
+  }
+  var unique = [];
+  events = events.filter(function(event) {
+    var eventDate = moment(event.date);
+    return eventDate.year() === cal.getYear() && cal.getMonth() === eventDate.format('MMMM');
+  }).filter(function(event) {
+    if ((event.title ==  _.findWhere(unique,  event.title))) {
+      return false;
+    }
+    else {
+      unique.push(event.title);
+      return true;
+    }
+  });
 }
-var unique = [];
-events = events.filter(function(event) {
-  var eventDate = moment(event.date);
-  return eventDate.year() === cal.getYear() && cal.getMonth() === eventDate.format('MMMM');
-}).filter(function(event) {
-  if ((event.title ==  _.findWhere(unique,  event.title))) {
-    return false;
-  }
-  else {
-    unique.push(event.title);
-    return true;
-  }
-});
 
 var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
