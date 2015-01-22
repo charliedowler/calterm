@@ -27,8 +27,9 @@ if (argv.y && typeof argv.y == 'number') {
 }
 
 var events = [];
+var DISABLE_EVENTS = process.env.CALTERM_DISABLE_EVENTS;
 
-if (!process.env.CALTERM_DISABLE_EVENTS) {
+if (!DISABLE_EVENTS || DISABLE_EVENTS === "false") {
   for (var place in bankHolidays) {
     events = events.concat(bankHolidays[place].events);
   }

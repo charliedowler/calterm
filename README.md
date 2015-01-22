@@ -37,7 +37,7 @@ Set the year
 
 ### Environment variables
 
-`$ export CALTERM_DISABLE_EVENTS`
+`$ export CALTERM_DISABLE_EVENTS=true`
 
 Disable event highlighting
 
