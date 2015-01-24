@@ -46,6 +46,16 @@ if (!DISABLE_EVENTS || DISABLE_EVENTS === "false") {
       return true;
     }
   });
+
+  if (argv.show) {
+    var event = _.find(events, function(event) {
+      return moment(event.date).format('D') == argv.show;
+    });
+    if (event) {
+      console.log(event.title);
+      process.exit(0);
+    }
+  }
 }
 
 var days = cal.daysOfWeek.map(function (day) {
