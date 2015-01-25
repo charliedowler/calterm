@@ -26,6 +26,7 @@ if (argv.y && typeof argv.y == 'number') {
   cal.setYear(argv.y);
 }
 
+var header;
 var events = [];
 var DISABLE_EVENTS = process.env.CALTERM_DISABLE_EVENTS;
 
@@ -52,8 +53,7 @@ if (!DISABLE_EVENTS || DISABLE_EVENTS === "false") {
       return moment(event.date).format('D') == argv.show;
     });
     if (event) {
-      console.log(event.title);
-      process.exit(0);
+      header = event.title;
     }
   }
 }
@@ -62,7 +62,7 @@ var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
 });
 var blank = [];
-var header = cal.getMonth() + ' ' + cal.getYear();
+header = header || cal.getMonth() + ' ' + cal.getYear();
 for (var i = 0; i < (Math.floor((20 - header.length) / 2));i++) {
   blank.push(' ');
 }
