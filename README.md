@@ -6,7 +6,8 @@
 ```shell
 $ npm install -g calterm
 ```
-
+### Demo
+![demo](demo.gif)
 ### Usage
 
 ```js
