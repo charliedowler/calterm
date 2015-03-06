@@ -36,12 +36,6 @@ Type: `Number`
 
 Set the year
 
-### Environment variables
-
-`$ export CALTERM_DISABLE_EVENTS=true`
-
-Disable event highlighting
-
 ## Release History
 - 2015-01-09 v0.2.1 Fixed off center header
 - 2014-11-17 v0.2.0 Smarter arguments

@@ -6,7 +6,6 @@ var _ = require('underscore');
 var moment = require('moment');
 var table = require('text-table');
 var argv = require('minimist')(process.argv.slice(2));
-var bankHolidays = require('./data/uk-holidays.json');
 
 var cal = new Calterm();
 
@@ -26,43 +25,11 @@ if (argv.y && typeof argv.y == 'number') {
   cal.setYear(argv.y);
 }
 
-var header;
-var events = [];
-var DISABLE_EVENTS = process.env.CALTERM_DISABLE_EVENTS;
-
-if (!DISABLE_EVENTS || DISABLE_EVENTS === "false") {
-  for (var place in bankHolidays) {
-    events = events.concat(bankHolidays[place].events);
-  }
-  var unique = [];
-  events = events.filter(function(event) {
-    var eventDate = moment(event.date);
-    return eventDate.year() === cal.getYear() && cal.getMonth() === eventDate.format('MMMM');
-  }).filter(function(event) {
-    if ((event.title ==  _.findWhere(unique,  event.title))) {
-      return false;
-    }
-    else {
-      unique.push(event.title);
-      return true;
-    }
-  });
-
-  if (argv.show) {
-    var event = _.find(events, function(event) {
-      return moment(event.date).format('D') == argv.show;
-    });
-    if (event) {
-      header = event.title;
-    }
-  }
-}
-
 var days = cal.daysOfWeek.map(function (day) {
   return day.substring(0, 2);
 });
 var blank = [];
-header = header || cal.getMonth() + ' ' + cal.getYear();
+var header = header || cal.getMonth() + ' ' + cal.getYear();
 for (var i = 0; i < (Math.floor((20 - header.length) / 2));i++) {
   blank.push(' ');
 }
@@ -87,19 +54,11 @@ var title = present.getMonth() + ' ' + present.getYear();
 // Fill in the days
 for (var day = 1; day <= cal.getDaysThisMonth(); day++) {
   var item = day < 10 ? ' ' + day : day + '';
-  if (RegExp(title).test(header) && day == today) {
+  if (new RegExp(title).test(header) && day == today) {
     grid.push(item.inverse);
   }
   else {
-    var hol = _.find(events, function(event) {
-      return moment(event.date).format('DD') == day;
-    });
-    if (!!hol) {
-      grid.push(item.green);
-    }
-    else {
-      grid.push(item);
-    }
+    grid.push(item);
   }
 }
 

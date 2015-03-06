@@ -19,13 +19,6 @@ test('cal', function (runner) {
   cal.setYear(2022);
   runner.equal(cal.getYear(), 2022, 'cal.setYear(2022) sets the year to 2022');
 
-  function next() {
-    exec('node ./cli 1 2015 --show 1', function (err, stdout, stderr) {
-      var pattern = /New Year’s Day/;
-      runner.equal(pattern.test(stdout), true, '1st of January 2015 returns New Years Day');
-      runner.end();
-    });
-  }
   exec('node ./cli 9 2014', function (err, stdout, stderr) {
     stdout = stdout.replace('\u001b[36m   September 2014\u001b[39m\n', '');
     stdout = stdout.trim();
@@ -37,6 +30,6 @@ test('cal', function (runner) {
       [ 21, 22, 23, 24, 25, 26, 27 ],
       [ 28, 29, 30 ]
     ], { hsep: ' ', align: ['r', 'r', 'r', 'r', 'r', 'r', 'r'] }), 'cli.js produces a calendar grid');
-    next();
+    runner.end();
   });
 });
