@@ -10,7 +10,13 @@ var argv = require('minimist')(process.argv.slice(2));
 var cal = new Calterm();
 
 argv._.forEach(function (arg) {
-  if (/^[0-9]{1,2}$/.test(arg)) {
+  if (arg === 'next') {
+    argv.m = cal.setMonth((+cal.moment.format('M')) + 1);
+  }
+  else if (arg == 'prev') {
+    argv.m = cal.setMonth((+cal.moment.format('M')) - 1);
+  }
+  else if (/^[0-9]{1,2}$/.test(arg)) {
     argv.m = arg;
   }
   else if (/[0-9]{4}/.test(arg)) {

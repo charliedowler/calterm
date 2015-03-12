@@ -34,6 +34,12 @@ Set the month
 #### options.y
 Type: `Number`
 
+#### options.next
+Type: `String`
+
+#### options.prev
+Type: `String`
+
 Set the year
 
 ## Release History
